@@ -12,6 +12,9 @@ public class r2 {
         System.out.println((char) (s ^ ' '));
 
 
+        System.out.println(jkStrTo.strToInt("1"));
+
+
     }
 
 }

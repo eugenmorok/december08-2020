@@ -363,7 +363,7 @@ public class StringLibrary {
     */
 
 
-    static int[] numbersOfString(String inputString) {
+    static int[] numbersOfString_wrongwrong(String inputString) {
 
         int arrLen = 0;
         String[] digits = new String[inputString.length()];
@@ -510,10 +510,6 @@ public class StringLibrary {
         System.out.println(output);
 
     }
-
-
-
-
 
 
     static String jkTrim(String inputString) {
@@ -932,7 +928,7 @@ public class StringLibrary {
 
         //jkPrintArray.jkPrintArrOneStr(stringArr);
 
-        System.out.println(jkArrayTo.stringOne(stringArr));
+        System.out.println(jkNoExcSpaces(jkArrayTo.stringOne(stringArr)));
 
 
     }
@@ -1118,6 +1114,283 @@ public class StringLibrary {
     }
 
 
+    static String jkNoExcSpaces(String inputString) {
+
+        String out = "";
+        boolean isCatch = false;
+
+
+        for (int i = 0; i < inputString.length(); i++) {
+
+
+            if (inputString.charAt(i) == 32) {
+
+                if (isCatch) {
+
+                    continue;
+
+                }
+
+                isCatch = true;
+
+            } else {
+
+                isCatch = false;
+
+            }
+
+            out += inputString.charAt(i);
+
+        }
+
+
+        return jkTrim(out);
+
+    }
+
+
+    //--------------------------------------------------------------------------------------------------------
+
+
+
+
+
+    /*
+    8) подсчёт слов в строке.
+    Сложность 2.
+    Сигнатура метода static int quantityOfWordsInString ( String inputString ).
+    Пример. Вручную вводится строка: «dd2 1r t yr1 », вывод должен быть: «4». Или для ввода «  wall the back»
+    должен быть вывод: «3».
+    */
+
+    static int quantityOfWordsInString(String inputString) {
+
+        //System.out.println(inputString);
+
+        inputString = jkNoExcSpaces(jkTrim(inputString));
+
+        int cnt = 0;
+
+        for (int i = 0; i < inputString.length(); i++) {
+
+            if (inputString.charAt(i) == 32) cnt++;
+
+        }
+
+        return cnt + 1;
+
+    }
+
+
+    //--------------------------------------------------------------------------------------------------------
+
+
+
+
+
+    /*
+    16) парсинг строки на слова, каждое из которых сохраняется в массив строк как элемент. Словами считать подстроки
+    между пробелами, состоящими только из цифр и букв обоих регистров.
+    Сложность 3.
+    Сигнатура метода static [ ] String parsingIntoWords ( String inputString ).
+    Пример. Вручную вводится строка: «dd 21 r tyr 1», вывод должен быть:
+
+    «arrayOfString[0] = “dd”;
+    arrayOfString [1] =”21”;
+    arrayOfString [2] =”r”;
+    arrayOfString [3] =”tyr”;
+    arrayOfString [4] =”1”».
+
+    */
+
+    static String[] parsingIntoWords(String inputString) {
+
+        inputString = jkNoExcSpaces(jkTrim(inputString)) + " ";
+
+        String[] workArr = jkStringToArray.stringToArrayStr(inputString);
+
+        jkPrintArray.jkPrintArrOneStr(workArr);
+
+        int spcCnt = 0;
+
+        for (int i = 0; i < workArr.length; i++) {
+
+            if (workArr[i].charAt(0) == 32) spcCnt++;
+
+        }
+
+
+        String[] finArr = new String[spcCnt];
+
+
+        int j = 0;
+        String finStr = "";
+
+        for (int s = 0; s < 5; s++) {
+
+            //j = 0;
+
+            while (true) {
+
+
+                if (workArr[0].charAt(0) != 32) finStr += workArr[j];
+
+
+                //if (j  == workArr.length) break;
+                //else j++;
+
+                j++;
+
+                if (workArr[j].charAt(0) == 32) {
+
+                    finArr[s] = jkTrim(finStr);
+                    finStr = "";
+                    break;
+                }
+
+
+            }
+
+
+        }
+
+        return finArr;
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    //20201214------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------
+
+    /*
+    7) нахождение всех чисел в строке. Числа сохранить в отдельном массиве целых чисел.
+    Сложность 5.
+    Сигнатура метода static [ ] int numbersOfString ( String inputString ).
+    Пример. Вручную вводится строка: «dd21rtyr1», вывод должен быть: «arrayOfNumbers[0] = 21; arrayOfNumbers[1] = 1».
+     */
+
+    static int[] numbersOfString(String inputString) {
+
+        int d;
+        String digString = "";
+
+
+        for (int i = 0; i < inputString.length(); i++) {
+
+            d = inputString.charAt(i);
+
+            if (d > 47 & d < 58) digString += inputString.charAt(i);
+            else digString += " ";
+
+        }
+
+
+        digString = jkNoExcSpaces(jkTrim(digString)) + " ";
+        System.out.println(digString);
+
+        int cntOfSpc = 0;
+
+
+        for (int s = 0; s < digString.length(); s++) {
+
+            if (digString.charAt(s) == 32) cntOfSpc++;
+
+        }
+
+
+        System.out.println("cnt: " + cntOfSpc);
+
+        String[] digArr = new String[cntOfSpc];
+
+
+        int j = 0;
+        int k = 0;
+
+        String temp = "";
+
+
+        for (int digArrIdx = 0; digArrIdx < cntOfSpc; digArrIdx++) {
+
+
+            while (true) {
+
+                if (digString.charAt(j) == 32) break;
+
+                temp += digString.charAt(k) + "";
+                k++;
+
+                j++;
+
+
+            }
+
+            digArr[digArrIdx] = temp;
+
+            temp = "";
+            j = 0;
+
+
+        }
+
+
+        int[] finArr = new int[cntOfSpc];
+
+        for (int q = 0; q < cntOfSpc; q++) {
+
+            finArr[q] = jkStrTo.strToInt(jkTrim(digArr[q]));
+
+        }
+
+
+        jkPrintArray.jkPrintArrOneStr(digArr);
+
+
+        //------------------------------------------------------------------------------/parsing
+
+
+        int[] dd = {1, 2, 4};
+
+        return finArr;
+
+    }
+
+
+    //--------------------------------------------------------------------------------------------------------
+
+
+
+
+
+    /*
+    21) генерация случайной строки.
+
+    Сложность 5.
+
+    Сигнатура метода static void generationOfSpecifiedRandomString ( ).
+
+    Размер или длина строки спрашивается у пользователя, то есть вводится вручную. Программа должна давать возможность
+    выбирать пользователю вид получаемой строки.
+
+    Базовые виды: (b1-3)
+    случайная (все символы возможны), пример: «g23yfwbh3»
+    только цифры, пример: «632353»
+    только буквы (и строчные и заглавные), пример: «erAdTRfs»
+
+    Псевдовиды: (p)
+    Математические выражения. Содержат только цифры и символы «+-*'/=><», начинаются с числа и оканчиваются числом.
+    Цифры образуют числа длиной от 1 до 5 разрядов, распределение разрядности равномерное. После первого числа идёт
+    один случайно выбранный символ математической операции «+-*'/», затем второе число, затем один случайно выбранный
+    символ состояния «=><», и в конце число.
+    Пример: «5+0013=47», «53411/988<1005»
+
+    Предложение: (s)
+    Должно начинаться с заглавной буквы, оканчиваться одним из трёх символов: «.!?», содержать только
+    буквы, слова должны иметь длину от 1 до 12 символов и иметь нормальное распределение с максимумом в 6 символов,
+    обрамлённые единичными пробелами.
+
+    Пример псевдопредложения: «Kfbej n qbfbbaw eoisvbn sdjb fsbb oaas d!»
+    */
+
+
     //---------------------------------------------------------------------------checker
     public static void main(String[] args) {
 
@@ -1150,10 +1423,6 @@ public class StringLibrary {
         System.out.println();
 
         System.out.println(differenceOfTwoStrings("peterburg", "gammburg"));
-
-        System.out.println();
-
-        jkPrintArray.jkPrintArrOneInt(numbersOfString(someString));
 
         System.out.println();
 
@@ -1222,6 +1491,22 @@ public class StringLibrary {
         String some11 = " back   to    reality    ";
 
         clearingExcessSpaces(some11);
+
+        System.out.println();
+
+        String some12 = "  wall the back   ";
+
+        System.out.println(quantityOfWordsInString(some12));
+
+        System.out.println();
+
+        String some13 = "dd 21 r tyr 1";
+
+        jkPrintArray.jkPrintArrOneStr(parsingIntoWords(some13));
+
+        System.out.println("\nnumbersOfString\n");
+
+        jkPrintArray.jkPrintArrOneInt(numbersOfString(someString));
 
     }
     //---------------------------------------------------------------------------/checker
