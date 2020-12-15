@@ -6,9 +6,12 @@ public class jkEasyRandomGen {
 
         int v = (int) System.currentTimeMillis(); // seed value
         int switcher = v % 2;
+
+        isSeed += 4987;
+        isSeed = (isSeed ^ (isSeed >> 31)) - (isSeed >> 31);//--------------------------------------------------abs
+
         v = v / 100 * v * 1234987 % 100000 + switcher;
         v = ((v ^ (v >> 31)) - (v >> 31));
-
 
         System.out.println("the switcher: " + switcher);
         System.out.println("the gen seed: " + v);
@@ -18,13 +21,17 @@ public class jkEasyRandomGen {
         int k = 0;
         int b = 0;
 
-        if (isSeed != 0) {
+        if (isSeed != 4987) {
+
             k = isSeed % 256;
-            b = isSeed / 128;
+            b = isSeed / 128 + switcher + 1;
             v = isSeed % 100;
+
         } else {
+
             k = (v + 1) % 256;
-            b = (v % k) * 349 + switcher;
+            b = (v % (k + 1)) * 349 + switcher + 1;
+
         }
 
         System.out.println("seed k: " + k);
@@ -92,7 +99,7 @@ public class jkEasyRandomGen {
 
                 }
 
-                memo = memo % top;
+                memo = memo & top;
 
                 if (memo < bottom) memo = bottom + (k % 10);
 
@@ -115,7 +122,7 @@ public class jkEasyRandomGen {
 
         int[] newArr = new int[55];
 
-        jkFillTheArrOfGen(newArr, 9, 99, 0);
+        jkFillTheArrOfGen(newArr, 9, 99, 1987);
 
         jkPrintArray.jkPrintArrOneInt(newArr);
 

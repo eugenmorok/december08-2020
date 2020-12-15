@@ -1390,6 +1390,46 @@ public class StringLibrary {
     Пример псевдопредложения: «Kfbej n qbfbbaw eoisvbn sdjb fsbb oaas d!»
     */
 
+    static void generationOfbase1(int stringLen) {
+
+        int[] genArr = new int[stringLen];
+
+        jkEasyRandomGen.jkFillTheArrOfGen(genArr, 33, 126, 0);
+
+        //jkPrintArray.jkPrintArrOneInt(genArr);
+
+        String outString = "";
+
+        for (int i = 0; i < stringLen; i++) {
+
+            outString += (char)genArr[i];
+
+        }
+
+        System.out.println(outString);
+
+    }
+
+    static void generationOfbase2(int stringLen) {
+
+        int[] genArr = new int[stringLen];
+
+        jkEasyRandomGen.jkFillTheArrOfGen(genArr, 48, 57, 16413);
+
+        jkPrintArray.jkPrintArrOneInt(genArr);
+
+        String outString = "";
+
+        for (int i = 0; i < stringLen; i++) {
+
+            outString += (char)genArr[i];
+
+        }
+
+        System.out.println(outString);
+
+    }
+
 
     //---------------------------------------------------------------------------checker
     public static void main(String[] args) {
@@ -1507,6 +1547,18 @@ public class StringLibrary {
         System.out.println("\nnumbersOfString\n");
 
         jkPrintArray.jkPrintArrOneInt(numbersOfString(someString));
+
+        System.out.println();
+
+        System.out.println("generationOfbase1");
+
+        generationOfbase1(50);
+
+        System.out.println();
+
+        System.out.println("generationOfbase2");
+
+        generationOfbase2(50);
 
     }
     //---------------------------------------------------------------------------/checker
