@@ -1396,7 +1396,7 @@ public class StringLibrary {
 
         jkEasyRandomGen.jkFillTheArrOfGen(genArr, 33, 126, 0);
 
-        //jkPrintArray.jkPrintArrOneInt(genArr);
+        jkPrintArray.jkPrintArrOneInt(genArr);
 
         String outString = "";
 
@@ -1414,7 +1414,7 @@ public class StringLibrary {
 
         int[] genArr = new int[stringLen];
 
-        jkEasyRandomGen.jkFillTheArrOfGen(genArr, 48, 57, 16413);
+        jkEasyRandomGen.jkFillTheArrOfGen(genArr, 48, 57, 0);
 
         jkPrintArray.jkPrintArrOneInt(genArr);
 

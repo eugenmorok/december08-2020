@@ -13,10 +13,10 @@ public class jkEasyRandomGen {
         v = v / 100 * v * 1234987 % 100000 + switcher;
         v = ((v ^ (v >> 31)) - (v >> 31));
 
-        System.out.println("the switcher: " + switcher);
-        System.out.println("the gen seed: " + v);
+        //System.out.println("the switcher: " + switcher);
+        //System.out.println("the gen seed v: " + v);
 
-        //---------------------------------------------------------------------------- /mini random seed generator
+        //------------------------------------------------------------------------------/mini random seed generator
 
         int k = 0;
         int b = 0;
@@ -24,19 +24,19 @@ public class jkEasyRandomGen {
         if (isSeed != 4987) {
 
             k = isSeed % 256;
-            b = isSeed / 128 + switcher + 1;
-            v = isSeed % 100;
+            b = isSeed % 1024 + switcher + 1;
+            v = isSeed % 127;
 
         } else {
 
             k = (v + 1) % 256;
-            b = (v % (k + 1)) * 349 + switcher + 1;
+            b = (v % (k + 1)) * 349 + switcher + 9;
 
         }
 
         System.out.println("seed k: " + k);
         System.out.println("seed b: " + b);
-        System.out.println("yes seed v: " + v);
+        System.out.println("seed v: " + v);
 
         int arrLen = inputArray.length;
         int firstElem = ((k * v * v + b) % arrLen);
@@ -50,68 +50,51 @@ public class jkEasyRandomGen {
 
 
         int i = 1;
+        double e = 0;
         int element = 0;
         int memo = 0;
 
 
         while (i < arrLen) {
 
+
             if ((i & 1) == 1) {
 
-                element = ((inputArray[i - 1] * inputArray[i - 1] * k + b) / i * (b / k));
-                element = (((element ^ (1 << i)) & ~(1 << (k / b))) % k + 3);
+                int j = 0;
 
-                if (element == inputArray[i - 1]) {
+                e = (double) i;
+                e = 4. / (8. * e + 1.) - 2. / (8. * e + 4.) - 1. / (8. * e + 5.) - 1. / (8. * e + 6.);
+                memo = ((int) (e * k * (k + j) * 100000 + b));
 
-                    element = (((element ^ (1 << i)) & ~(1 << (k / b))) % v);
+                if (i % ((b % 10) + 1) == 0) memo = memo ^ (1 << (i % 15));
 
-                }
 
-                memo = (((element ^ (element >> 31)) - (element >> 31)) * 100) + bottom;
+                if (memo > top + 1) memo &= top;
 
-                if (memo == inputArray[i - 1]) {
-
-                    memo = (((element ^ (1 << i)) & ~(1 << (k / b))) % k + 1);
-
-                }
-
-                memo = memo % top;
-
-                if (memo < bottom) memo = bottom + (k % 10);
 
                 inputArray[i] = memo;
+
 
             } else {
 
-                element = ((inputArray[i - 1] * inputArray[i - 1] * k * 3 + b / 22));
+                memo = (k * inputArray[i - 1] + v) % b;
+                memo = (memo ^ (memo >> 31)) - (memo >> 31);
 
-                if (element == inputArray[i - 1]) {
+                if (i % ((b % 10) + 2) == 0) memo = memo ^ (1 << (i % 18));
 
-                    element = (((element ^ (1 << i)) & ~(1 << (k / b))) % k + 1);
 
-                }
+                if (memo > top + 1) memo %= top;
 
-                memo = (((element ^ (element >> 31)) - (element >> 31) * 2 / 3) % 100000);
-
-                if (memo == inputArray[i - 1]) {
-
-                    memo = (((element ^ (1 << i)) & ~(1 << (k / b))) % v);
-
-                }
-
-                memo = memo & top;
-
-                if (memo < bottom) memo = bottom + (k % 10);
 
                 inputArray[i] = memo;
 
-
             }
 
-            //inputArray[0] = (i % ((v % 100) + 1) / 2);
+
             i++;
 
         }
+
 
         //System.out.println("The array is full, the end of the bits method");
 
@@ -122,7 +105,7 @@ public class jkEasyRandomGen {
 
         int[] newArr = new int[55];
 
-        jkFillTheArrOfGen(newArr, 9, 99, 1987);
+        jkFillTheArrOfGen(newArr, 48, 57, 0);
 
         jkPrintArray.jkPrintArrOneInt(newArr);
 
