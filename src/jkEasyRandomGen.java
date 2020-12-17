@@ -5,7 +5,7 @@ public class jkEasyRandomGen {
         //------------------------------------------------------------------------------ mini random seed generator
 
         int v = (int) System.currentTimeMillis(); // seed value
-        int switcher = v % 2;
+        int switcher = 1;
 
         isSeed += 4987;
         isSeed = (isSeed ^ (isSeed >> 31)) - (isSeed >> 31);//--------------------------------------------------abs
@@ -39,12 +39,12 @@ public class jkEasyRandomGen {
         System.out.println("seed v: " + v);
 
         int arrLen = inputArray.length;
-        int firstElem = ((k * v * v + b) % arrLen);
+        int firstElem = ((k * v * v + b) + arrLen);
         firstElem = (firstElem ^ (firstElem >> 31)) - (firstElem >> 31); //----------------------------------abs
 
-        firstElem = (firstElem * v) & top;
+        firstElem = (firstElem * k) & top;
 
-        if (firstElem < bottom) firstElem = bottom + (k % 10);
+        if (firstElem < bottom) firstElem = top - firstElem;
 
         inputArray[0] = firstElem;
 
@@ -60,16 +60,16 @@ public class jkEasyRandomGen {
 
             if ((i & 1) == 1) {
 
-                int j = 0;
 
                 e = (double) i;
                 e = 4. / (8. * e + 1.) - 2. / (8. * e + 4.) - 1. / (8. * e + 5.) - 1. / (8. * e + 6.);
-                memo = ((int) (e * k * (k + j) * 100000 + b));
+                memo = ((int) (e * k * (k) * 100000 + b));
 
                 if (i % ((b % 10) + 1) == 0) memo = memo ^ (1 << (i % 15));
 
 
                 if (memo > top + 1) memo &= top;
+                if (memo < bottom -1) memo = top - memo;
 
 
                 inputArray[i] = memo;
@@ -84,6 +84,7 @@ public class jkEasyRandomGen {
 
 
                 if (memo > top + 1) memo %= top;
+                if (memo < bottom -1) memo = top - memo;
 
 
                 inputArray[i] = memo;
@@ -103,9 +104,9 @@ public class jkEasyRandomGen {
 
     public static void main(String[] args) {
 
-        int[] newArr = new int[55];
+        int[] newArr = new int[10];
 
-        jkFillTheArrOfGen(newArr, 48, 57, 0);
+        jkFillTheArrOfGen(newArr, 0, 256, 0);
 
         jkPrintArray.jkPrintArrOneInt(newArr);
 
