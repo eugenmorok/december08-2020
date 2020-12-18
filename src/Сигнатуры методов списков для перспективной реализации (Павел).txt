@@ -1,0 +1,204 @@
+  int namelist = 0;
+
+        int node = 0;
+
+        int cell = 0;
+
+        int freecell = 0;
+
+        System.out.print("\n Hello user, choose the operation you need with the list:" +
+                "\n1 - add node" +
+                "\n 2 - del node" +
+                "\n 3 - cascade (sequentially) remove a node");
+        String chose = reader.next();
+
+        switch( chose ){
+
+            case "1":
+
+                break;
+
+            case "2":
+
+                break;
+
+            case "3":
+
+                break;
+
+        }
+
+
+    }
+
+    /*
+    static int insertList (){ // fill in the list
+
+        System.out.print("\n Enter k = ");
+        int k = reader.nextInt();
+
+        System.out.print("\n Enter b = ");
+        int b = reader.nextInt();
+
+
+        return newList;
+
+    }
+*/
+    /*
+    static int deletelList( int newList ){
+
+
+
+        return newDelList;
+    }
+*/
+    /*
+    static int cascadeDeleteList( int newList ){
+
+
+        return cascDelList;
+    }
+*/
+    /*
+    static void outPutList( int newList ){
+
+
+    }
+*/
+    /*
+    static void baseLinearSerchexActvalue( int newList ){ // detecting that the value is in the list
+
+
+
+
+    }
+*/
+    /*
+    static int baseLinearSerchexActvalueNumberNode( int newList ){ //returning all node numbers with the desired value
+
+
+        return numbersofNode;
+
+    }
+*/
+    /*
+    static int baseLinearSerchexActvalueoverwrite( int newList ){ //overwriting all nodes with the desired value with a new value
+
+
+        return owerriteListonValue;
+
+    }
+*/
+    /*
+    static int baseLinearNumberNode( int newList ){ // returning the value of the node with the given number
+
+
+        return valueofNode;
+
+    }
+*/
+    /*
+    static int [ ] baseLinearNumberNodeoverwrite( int newList ){ // overwriting a new value node with a given number
+
+
+        return owerriteListonNumberNode;
+    }
+*/
+    /*
+    static void baseLinearSerchonRange( int newList ){ // detecting that values within the specified range are in the list
+
+
+
+    }
+*/
+    /*
+    static int baseLinearSerchonRangeNumber( int newList ){ // returning all node numbers with values within the specified range.
+
+
+        return numberofNodeOnRange;
+
+    }
+*/
+    /*
+    static int [ ] baseLinearNumberNodeoverwrite( int newList ){ // overwriting all nodes with values within the specified range to a new value
+
+
+        return owerriteListonValueOnRange;
+    }
+*/
+    /*
+    static void ChooseSearch(){
+
+        System.out.print("\n Hello user, how do you want to find the meaning:" +
+                "\n Value - by exact value" +
+                "\n node- by node number" +
+                "\n range - within the specified range of values");
+        String chooseSerching = reader.next();
+        switch( chooseSerching ){
+
+            case "Value":
+
+                SearchByExactValue();
+                break;
+
+            case "node":
+
+                SearchByNodeNumber();
+                break;
+
+            case "range":
+
+                break;
+
+        }
+
+    }
+*/
+    /*
+    static void SearchByExactValue(){
+
+
+        baseLinearSerchexActvalue( newList );
+        baseLinearSerchexActvalueNumberNode( newList );
+        baseLinearSerchexActvalueoverwrite( newList );
+
+
+
+    }
+*/
+    /*
+    static void SearchByNodeNumber(){
+
+        baseLinearNumberNode( newList );
+        baseLinearNumberNodeoverwrite( newList );
+
+    }
+*/
+    /*
+    static void SearchByRange(){
+
+        baseLinearSerchonRange( newList );
+        baseLinearSerchonRangeNumber( newList );
+        baseLinearNumberNodeoverwrite( newList );
+
+    }
+*/
+    /*
+    static int [ ] Instertmanually(){ //The user first enters the length of the list and then all the values of the list
+
+
+        return newList;
+
+    }
+*/
+    /*
+    static int sortedList( int  newList ){
+
+
+        return sortedlist;
+        
+    }
+*/
+
+}
