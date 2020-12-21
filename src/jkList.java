@@ -380,17 +380,18 @@ public class jkList {
 
         int nextAddress = MEMORY[listName + 1];
         int i = 0;
-        int cnt = 0;
 
-        for(; i < nodeId; i++) {
+
+        for (; i < nodeId; i++) {
 
             if (nextAddress == OUT_OF_MEMORY_ADDRESS) break;
 
-            System.out.println(i);
+            //System.out.println(i);
 
             nextAddress = MEMORY[nextAddress + 1];
 
         }
+
 
         if (nextAddress == OUT_OF_MEMORY_ADDRESS) return NULL_MEMORY_FILLER;
         else return MEMORY[nextAddress];
@@ -408,29 +409,32 @@ public class jkList {
         int i = 0;
 
 
-        while (i < nodeId) {
+        for (; i < nodeId; i++) {
+
+            if (nextAddress == OUT_OF_MEMORY_ADDRESS) break;
+
+            //System.out.println(i);
 
             nextAddress = MEMORY[nextAddress + 1];
 
-            i += 2;
-
         }
 
-        System.out.println(nextAddress);
-        if (nextAddress == OUT_OF_MEMORY_ADDRESS) System.out.println(NULL_MEMORY_FILLER);
-        else System.out.println(MEMORY[nextAddress]);
+
+        if (nextAddress == OUT_OF_MEMORY_ADDRESS) System.out.println(NULL_MEMORY_FILLER +
+                " some value error here (changeTheNodeIdVal - method)");
+        else MEMORY[nextAddress] = newValue;
 
 
     }
 
-    //----------------------------------------------------------------------------------------------------------------
+    //---------------------------------------------------------------------------------------------------filler methods
 
     /*
     11) Создание списка максимальной длины, заполненным значениями
 
     - константной последовательности -- newListConstSequence
 
-    - арифметической прогрессии
+    - арифметической прогрессии -- newListArithmeticSequence
 
     - периодической последовательности
 
@@ -448,24 +452,59 @@ public class jkList {
 
     }
 
-    static void newListArithmeticSequence(int firstElement, int d, int size) {
+    static void newListArithmeticSequence(int firstElement, int a, int d, int size) {
 
         // a(n) = a(n - 1) + d
 
         createANewList();
-        // TODO: finish it, i need the getTheNodeIdVal - method here
-        int elemenToAdding = 0;
+        // TODO: do not forget for myself that to finish it, I will need the getTheNodeIdVal - method here
+        // int elementToAdding = 0;
 
         addNextValToTheList(firstElement);
 
+
         for (int i = 1; i < size; i++) {
 
-            addNextValToTheList(MEMORY[i - 1] + d);
+            addNextValToTheList(a * (firstElement - 1) + d);
+            firstElement = getTheNodeIdVal(listName, i);
+
+            //System.out.print(getTheNodeIdVal(listName, i) + ", "); // print the list here
 
         }
 
     }
 
+
+    static void newListPeriodicSequence(int k, int period, int size) {
+
+        // a(n + p) = a(n)
+
+        createANewList();
+
+        //System.out.print(getTheNodeIdVal(listName, i) + ", "); // print the list here
+
+        int i = 1;
+        int temp = k;
+
+        //addNextValToTheList(k);
+
+
+        while (i < size) {
+
+            addNextValToTheList(k);
+
+            k++;
+
+            if (i % period == 0 ) k = temp;
+
+            i++;
+
+        }
+
+
+    }
+
+    //--------------------------------------------------------------------------------------------------/filler methods
 
     //---------------------------------------------------------------------------------------------------------checkers
 
@@ -477,7 +516,7 @@ public class jkList {
         System.out.print("--: ");
         jkPrintArray.jkPrintArrOneInt(MEMORY);
 
-        System.out.print("The free gen addres (== -7) --: ");
+        System.out.print("The free gen address (== -7) --: ");
         System.out.println(getFreeMemoryAddress());
 
         /*
@@ -541,7 +580,8 @@ public class jkList {
         printList(0, 3);
         System.out.println();
         System.out.println(getTheNodeIdVal(0, 6));
-        //changeTheNodeIdVal(0, 3, 888);
+        changeTheNodeIdVal(0, 3, 888);
+        printList(0, 3);
 
 
         System.out.println();
@@ -558,7 +598,16 @@ public class jkList {
         System.out.println();
         System.out.println(getTheNodeIdVal(0, 7));
 
-        System.out.println(getTheNodeIdVal(0, 7));
+        changeTheNodeIdVal(0, 7, 5555);
+        printList(0, 3);
+
+        longLine();
+        System.out.println("check the newListArithmeticSequence:");
+        newListArithmeticSequence(1, -1, 3, 127);
+
+        longLine();
+        System.out.println("check the newListPeriodicSequence:");
+        newListPeriodicSequence(1, 8,127);
         printList(0, 3);
 
 
