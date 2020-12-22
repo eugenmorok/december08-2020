@@ -281,6 +281,8 @@ public class jkList {
 
     - Вывод списка значений, и номеров узлов. Выводятся узлы в виде(,3)
     [1] 3 -> [2] 32 ->  [3] 55 ->  [4] 7 ->  [5] 21 ->  [6] 88 -> null
+
+    - Вывод всей основной информации (, 4)
      */
 
     static void printList(int printListName, int option) {
@@ -364,6 +366,36 @@ public class jkList {
             }
 
 
+            case 4: {
+
+                System.out.print(MEMORY[printListName] + " nodes: ");  // print the amount of the list nodes
+
+                int firstLinkIs = MEMORY[printListName + 1];  // get the link from the list head
+
+
+                for (int printCount = printListName; printCount < printArrLen; printCount++) {
+
+                    System.out.printf("[%d] [%d] %d -> ", printCount, firstLinkIs, MEMORY[firstLinkIs]); // full out
+                    // System.out.printf("[%d] %d -> ", printCount, MEMORY[firstLinkIs]); // print linked values here
+
+                    if (MEMORY[firstLinkIs + 1] == 257) break;  // check for the end value
+
+                    else {
+
+                        firstLinkIs = MEMORY[firstLinkIs + 1];
+
+                    }
+
+                }
+
+
+                System.out.print("null");
+
+                break;
+
+            }
+
+
             default: {
 
                 System.out.println("printList - method: some error here");
@@ -398,6 +430,32 @@ public class jkList {
 
     }
 
+
+    //--the method helps to get the value of the list by its ordinal number--------------------------------------------
+
+    static int getTheNodeIdLink(int listName, int nodeId) {
+
+        int nextAddress = MEMORY[listName + 1];
+        int i = 0;
+
+
+        for (; i < nodeId; i++) {
+
+            if (nextAddress == OUT_OF_MEMORY_ADDRESS) break;
+
+            //System.out.println(i);
+
+            nextAddress = MEMORY[nextAddress + 1];
+
+        }
+
+
+        if (nextAddress == OUT_OF_MEMORY_ADDRESS) return OUT_OF_MEMORY_ADDRESS;
+        else return nextAddress;
+
+    }
+
+
     //-----------------------------------------------------------------------------------------------------------------
 
     //--the method helps to change the value of the list by its ordinal number-----------------------------------------
@@ -430,13 +488,13 @@ public class jkList {
     //---------------------------------------------------------------------------------------------------filler methods
 
     /*
-    11) Создание списка максимальной длины, заполненным значениями
+    11) Создание списка максимальной длины, заполненным значениями (the length may be )
 
     - константной последовательности -- newListConstSequence
 
     - арифметической прогрессии -- newListArithmeticSequence
 
-    - периодической последовательности
+    - периодической последовательности -- newListPeriodicSequence
 
      */
 
@@ -489,13 +547,13 @@ public class jkList {
         //addNextValToTheList(k);
 
 
-        while (i < size) {
+        while (i < size + 1) {
 
             addNextValToTheList(k);
 
             k++;
 
-            if (i % period == 0 ) k = temp;
+            if (i % period == 0) k = temp;
 
             i++;
 
@@ -505,6 +563,41 @@ public class jkList {
     }
 
     //--------------------------------------------------------------------------------------------------/filler methods
+
+
+
+    /*
+    1) Написать метод, который помещает во вспомогательный массив адреса узлов, расположенных через каждые N / 4 узлов,
+    где N – общее число узлов списка. Например, если в списке 100 узлов, тогда во вспомогательном массиве будут
+    храниться адреса 25, 50, 75 и 100 узлов. Если в списке 77 узлов, тогда во вспомогательном массиве будут храниться
+    адреса 19, 38, 57 и 76 узлов.
+    */
+
+    static void toFillTheReferenceArray(int listNameHere) {
+
+        int firstIdToAAdding = MEMORY[listNameHere] / REFERENCE_ARRAY_CAPACITY - 1;
+        int step = firstIdToAAdding + 1;
+
+        System.out.println("first ID to adding is " + (firstIdToAAdding));
+
+        // TODO: to create the getMeTheLinkFromListByListId - method here
+
+        int firstReferAddress = getTheNodeIdLink(listNameHere, firstIdToAAdding);
+
+        System.out.println("first ID link is " + firstReferAddress);
+
+
+        for (int referArrayIncrement = 0;
+             referArrayIncrement < REFERENCE_ARRAY_CAPACITY;
+             referArrayIncrement++) {
+
+            referenceArray[referArrayIncrement] = getTheNodeIdLink(listNameHere, firstIdToAAdding);
+            firstIdToAAdding += step;
+
+        }
+
+    }
+
 
     //---------------------------------------------------------------------------------------------------------checkers
 
@@ -590,6 +683,7 @@ public class jkList {
         clearListBody();
         printList(0, 1);
 
+
         longLine();
         System.out.println("check the newListConstSequence:");
         newListConstSequence(13, 127);
@@ -601,14 +695,29 @@ public class jkList {
         changeTheNodeIdVal(0, 7, 5555);
         printList(0, 3);
 
+
         longLine();
         System.out.println("check the newListArithmeticSequence:");
         newListArithmeticSequence(1, -1, 3, 127);
 
+
         longLine();
         System.out.println("check the newListPeriodicSequence:");
-        newListPeriodicSequence(1, 8,127);
+        newListPeriodicSequence(1, 8, 127);
         printList(0, 3);
+
+
+        longLine();
+        System.out.println("check the fill the reference array:");
+        System.out.println("create the new list with the 111 elements and print out it right here");
+        newListPeriodicSequence(1, 8, 111);
+        System.out.println("get the node id method: " + getTheNodeIdLink(0, 4));
+        printList(0, 4);
+        shortLine();
+        System.out.println("use the fill method now and print the result");
+        toFillTheReferenceArray(0);
+        System.out.println("TADAM, the reference array is:");
+        jkPrintArray.jkPrintArrOneInt(referenceArray);
 
 
     }
