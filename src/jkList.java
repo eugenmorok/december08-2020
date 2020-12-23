@@ -693,6 +693,51 @@ public class jkList {
 
     //-------------------------------------------------------------------------------------------/set Node Values By Id
 
+    //---------------------------------------------------------------------------------quasi-binary search of the value
+
+    static int quasiBinSearchOfValue(int listNameHere, int searchValue) {
+
+
+        int halfOfTheRefArray; // start search position
+        int outListAddress = NULL_MEMORY_FILLER;
+
+
+        if ((REFERENCE_ARRAY_CAPACITY & 1) == 1) halfOfTheRefArray = (REFERENCE_ARRAY_CAPACITY / 2) + 1;
+        else halfOfTheRefArray = (REFERENCE_ARRAY_CAPACITY / 2);
+        // if ref capacity is not even then + 1 for centering of the half position
+
+        halfOfTheRefArray--; //we remember that the ref array starts at the 0 position
+
+
+        if (referenceArray[halfOfTheRefArray] == MEMORY[referenceArray[halfOfTheRefArray]]) {
+
+            outListAddress = referenceArray[halfOfTheRefArray];
+
+        } else {
+
+            if (MEMORY[referenceArray[halfOfTheRefArray]] < searchValue) {
+
+                if (MEMORY[referenceArray[halfOfTheRefArray + 1]] < searchValue) {
+
+                    if (MEMORY[referenceArray[halfOfTheRefArray + 2]] < searchValue) {
+
+
+
+                    }
+
+                }
+
+
+            }
+
+        }
+
+        return outListAddress; // return -7 if the value not in the list
+
+    }
+
+    //--------------------------------------------------------------------------------/quasi-binary search of the value
+
 
     //---------------------------------------------------------------------------------------------------------checkers
 
@@ -794,6 +839,13 @@ public class jkList {
         longLine();
         shortLine();
 
+        // Demo: Periodic sequence
+        longLine();
+        System.out.println("check the newListPeriodicSequence:");
+        newListPeriodicSequence(1, 8, 127);
+        printList(0, 3);
+
+
         System.out.println("check the newListArithmeticSequence:");
         newListArithmeticSequence(7, 1, 2, 127);
         printList(0, 4);
@@ -828,16 +880,12 @@ public class jkList {
         System.out.println("TADAM, the reference address array of the sorted list is on the bottom:");
         jkPrintArray.jkPrintArrOneInt(referenceArray); // print the created ref array
 
-        // Demo: Periodic sequence
+
+        // Demo: quasi-binary search method
         longLine();
-        System.out.println("check the newListPeriodicSequence:");
-        newListPeriodicSequence(1, 8, 127);
-        printList(0, 3);
+        System.out.println("check the quasi-binary search method(we search the list address of the value \"12\"): ");
 
-
-
-
-
+        System.out.println(quasiBinSearchOfValue(0, 12));
 
 
     }
