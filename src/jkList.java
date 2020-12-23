@@ -624,6 +624,40 @@ public class jkList {
 
     //---------------------------------------------------------------------------------------------sort the list values
 
+    static void sortListValues(int listNameHere) {
+
+    /*
+    There is the easy bubble sort method for the some list.
+    The first loop shrinks the array fragment each pass, because the second loop always
+    puts at the end fragment maximum element (the little optimization here)
+    */
+
+        int listLength = MEMORY[listNameHere];
+        int firstVal, secondVal;
+        int tempVal = 0;
+
+        for (int i = listLength - 1; i > 0; i--) {
+
+            for (int j = 0; j < i; j++) {
+
+
+
+            /*at this point we compare the elements in pairs, if they are in the wrong order,
+            then we swap them (TODO: maybe I can use the list swap method here as the option)
+            */
+                firstVal = getTheNodeIdVal(listNameHere, j);
+                secondVal = getTheNodeIdVal(listNameHere, (j + 1));
+
+                if (firstVal > secondVal) {
+
+                    tempVal = firstVal;
+                    setNodeValuesById(listNameHere, j, secondVal);
+                    setNodeValuesById(listNameHere, (j + 1), tempVal);
+
+                }
+            }
+        }
+    }
 
 
     //--------------------------------------------------------------------------------------------/sort the list values
@@ -655,8 +689,6 @@ public class jkList {
         MEMORY[nextAddress] = newNodeValue;
 
     }
-
-
 
 
     //-------------------------------------------------------------------------------------------/set Node Values By Id
@@ -774,28 +806,38 @@ public class jkList {
 
         shortLine();
         System.out.println("to node values swap use the swapListNodes - method(id 6 swap id 7): ");
-        swapListNodes(0,6,7);
+        swapListNodes(0, 6, 7);
+        printList(0, 4);
+
+        // Demo: sort the list method
+        shortLine();
+        System.out.println("sort the list method: ");
+        sortListValues(0);
+        System.out.println("there is the sorted list:");
+        printList(0, 4);
+
+        // Demo: get the node id Link method
+        shortLine();
+        System.out.println("get the node id Link method: " + getTheNodeIdLink(0, 4));
         printList(0, 4);
         shortLine();
 
+        // Demo: fill reference array method
+        System.out.println("use the fill method now and print the result");
+        toFillTheReferenceArray(0);
+        System.out.println("TADAM, the reference address array of the sorted list is on the bottom:");
+        jkPrintArray.jkPrintArrOneInt(referenceArray); // print the created ref array
 
+        // Demo: Periodic sequence
         longLine();
         System.out.println("check the newListPeriodicSequence:");
         newListPeriodicSequence(1, 8, 127);
         printList(0, 3);
 
 
-        longLine();
-        System.out.println("check the fill the reference array:");
-        System.out.println("create the new list with the 111 elements and print out it right here");
-        newListPeriodicSequence(1, 8, 111);
-        System.out.println("get the node id method: " + getTheNodeIdLink(0, 4));
-        printList(0, 4);
-        shortLine();
-        System.out.println("use the fill method now and print the result");
-        toFillTheReferenceArray(0);
-        System.out.println("TADAM, the reference array is:");
-        jkPrintArray.jkPrintArrOneInt(referenceArray);
+
+
+
 
 
     }
