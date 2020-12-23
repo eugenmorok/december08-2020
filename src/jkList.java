@@ -598,6 +598,69 @@ public class jkList {
 
     }
 
+    //----------------------------------------------------------------------------------------------swap the list nodes
+
+    /*
+    the method exchanges the values of the specified nodes of the specified list by node id
+    */
+
+    static void swapListNodes(int listNameHere, int firstNodeId, int secondNodeId) {
+
+        int valueBuffer;
+
+        //addressBuffer = getTheNodeIdLink(listNameHere, firstNodeId); not need
+
+        valueBuffer = getTheNodeIdVal(listNameHere, firstNodeId);
+
+        //TODO: there are the setNodeValuesById for realisation
+
+        setNodeValuesById(listNameHere, firstNodeId, getTheNodeIdVal(listNameHere, secondNodeId));
+        setNodeValuesById(listNameHere, secondNodeId, valueBuffer);
+
+
+    }
+
+    //---------------------------------------------------------------------------------------------/swap the list nodes
+
+    //---------------------------------------------------------------------------------------------sort the list values
+
+
+
+    //--------------------------------------------------------------------------------------------/sort the list values
+
+
+    //--------------------------------------------------------------------------------------------set Node Values By Id
+
+    static void setNodeValuesById(int listNameHere, int nodeIdHere, int newNodeValue) {
+
+        int nextAddress = MEMORY[listNameHere + 1]; // set pointer to the head position
+
+
+        for (int i = 0; i < nodeIdHere; i++) {
+
+            if (nextAddress == OUT_OF_MEMORY_ADDRESS) {
+
+                System.out.println("::we have reached the end of the list here::");
+                break;
+            }
+
+            //System.out.println(i);
+
+            nextAddress = MEMORY[nextAddress + 1];
+
+        }
+
+        System.out.println("the nextAddress to value set is: " + nextAddress);
+
+        MEMORY[nextAddress] = newNodeValue;
+
+    }
+
+
+
+
+    //-------------------------------------------------------------------------------------------/set Node Values By Id
+
 
     //---------------------------------------------------------------------------------------------------------checkers
 
@@ -697,8 +760,23 @@ public class jkList {
 
 
         longLine();
+        shortLine();
+
         System.out.println("check the newListArithmeticSequence:");
-        newListArithmeticSequence(1, -1, 3, 127);
+        newListArithmeticSequence(7, 1, 2, 127);
+        printList(0, 4);
+
+        shortLine();
+        System.out.println("check the setNodeValuesById - method:");
+        setNodeValuesById(0, 3, 6666);
+        //setNodeAddressById(0, 3, 111); it is not possible
+        printList(0, 4);
+
+        shortLine();
+        System.out.println("to node values swap use the swapListNodes - method(id 6 swap id 7): ");
+        swapListNodes(0,6,7);
+        printList(0, 4);
+        shortLine();
 
 
         longLine();
