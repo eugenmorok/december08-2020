@@ -643,7 +643,7 @@ public class jkList {
 
 
             /*at this point we compare the elements in pairs, if they are in the wrong order,
-            then we swap them (TODO: maybe I can use the list swap method here as the option)
+            then we swap them (TODO: maybe I can use the list swap method as the option here)
             */
                 firstVal = getTheNodeIdVal(listNameHere, j);
                 secondVal = getTheNodeIdVal(listNameHere, (j + 1));
@@ -693,6 +693,57 @@ public class jkList {
 
     //-------------------------------------------------------------------------------------------/set Node Values By Id
 
+    //--------------------------------------------------------------------------------------------search by brute force
+
+    static void simpleSearchValueAddress(int listNameHere, int startAddress, int endAddress, int searchValue) {
+
+        int nextAddress = startAddress;
+
+        if (endAddress == 0) endAddress = (OUT_OF_MEMORY_ADDRESS - 2) / 2; // if not the end address
+        if (startAddress == 0) nextAddress = MEMORY[listNameHere + 1];
+
+        int i = 0;
+
+        while (MEMORY[nextAddress] != searchValue && MEMORY[nextAddress + 1] < OUT_OF_MEMORY_ADDRESS) {
+
+
+
+            nextAddress = MEMORY[nextAddress + 1];
+            i++;
+
+
+
+
+        }
+
+
+
+        /*
+
+        for (; i < MEMORY[listNameHere] - 1; i++) {
+
+            if (nextAddress == endAddress) break;
+            if (nextAddress > OUT_OF_MEMORY_ADDRESS - 1) break;
+            if (MEMORY[nextAddress] == searchValue) break;
+
+            //System.out.println(i);
+
+            nextAddress = MEMORY[nextAddress + 1];
+
+        }
+
+         */
+
+
+        System.out.println("\nThe search: value of search value from list is: " + MEMORY[nextAddress]);
+        System.out.println("The search: link of search value from list is: " + nextAddress);
+        System.out.println("The search: id of search value from list is: " + i);
+
+
+    }
+
+    //-------------------------------------------------------------------------------------------/search by brute force
+
     //---------------------------------------------------------------------------------quasi-binary search of the value
 
     static int quasiBinSearchOfValue(int listNameHere, int searchValue) {
@@ -720,7 +771,6 @@ public class jkList {
                 if (MEMORY[referenceArray[halfOfTheRefArray + 1]] < searchValue) {
 
                     if (MEMORY[referenceArray[halfOfTheRefArray + 2]] < searchValue) {
-
 
 
                     }
@@ -847,7 +897,7 @@ public class jkList {
 
 
         System.out.println("check the newListArithmeticSequence:");
-        newListArithmeticSequence(7, 1, 2, 127);
+        newListArithmeticSequence(7, 1, 2, 127); // 127 elements
         printList(0, 4);
 
         shortLine();
@@ -886,6 +936,16 @@ public class jkList {
         System.out.println("check the quasi-binary search method(we search the list address of the value \"12\"): ");
 
         System.out.println(quasiBinSearchOfValue(0, 12));
+
+
+        // Demo: check the simple search method
+        longLine();
+        System.out.println("check the brut force search method: ");
+        System.out.println("the test list: ");
+
+        printList(0, 4);
+        simpleSearchValueAddress(0, 1, 200, 17);
+        printList(0,1);
 
 
     }
