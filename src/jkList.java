@@ -591,7 +591,10 @@ public class jkList {
              referArrayIncrement < REFERENCE_ARRAY_CAPACITY;
              referArrayIncrement++) {
 
-            referenceArray[referArrayIncrement] = getTheNodeIdLink(listNameHere, firstIdToAAdding);
+            referenceArray[referArrayIncrement] = getTheNodeIdLink(listNameHere, firstIdToAAdding); // address search
+
+            //referenceArray[referArrayIncrement] = firstIdToAAdding;
+
             firstIdToAAdding += step;
 
         }
@@ -695,31 +698,56 @@ public class jkList {
 
     //--------------------------------------------------------------------------------------------search by brute force
 
-    static void simpleSearchValueAddress(int listNameHere, int startAddress, int endAddress, int searchValue) {
 
-        int nextAddress = startAddress;
+    static int simpleSearchValueAddress(int listNameHere, int startAddress, int endAddress, int searchValue) {
 
-        if (endAddress == 0) endAddress = (OUT_OF_MEMORY_ADDRESS - 2) / 2; // if not the end address
-        if (startAddress == 0) nextAddress = MEMORY[listNameHere + 1];
+        System.out.printf("\n::input start = %d, input end = %d, value to search = %d, list name = %d::\n",
+                startAddress, endAddress, searchValue, listNameHere);
 
-        int i = 0;
+        //TODO: do not apply this method yet
 
-        while (MEMORY[nextAddress] != searchValue && MEMORY[nextAddress + 1] < OUT_OF_MEMORY_ADDRESS) {
+        int firstAddress = startAddress;
 
+        int firstValByFirstAddress = MEMORY[firstAddress];
 
-
-            nextAddress = MEMORY[nextAddress + 1];
-            i++;
+        int firstNextLinkAddress = startAddress + 1; // значение для перехода к след узлу
 
 
+        while (MEMORY[firstAddress] != OUT_OF_MEMORY_ADDRESS) {
 
+            System.out.println("firstAddress (simple method): " + firstAddress);
+
+            firstAddress = MEMORY[firstAddress + 1];
+
+            if (searchValue == MEMORY[firstAddress]) { // если значение найдено, то выход
+
+                firstValByFirstAddress = MEMORY[firstAddress];
+
+                break;
+
+            }
+
+            if (firstAddress == endAddress) {
+
+                System.out.println("the end address in this place");
+
+                if (firstValByFirstAddress != searchValue) {
+
+                    System.out.println("the search value is not find");
+
+                    //the search value not within the search range, assign the address out of memory
+                    firstAddress = OUT_OF_MEMORY_ADDRESS;
+                    firstValByFirstAddress = NULL_MEMORY_FILLER;
+
+                }
+
+                break; // the end address in this place
+
+            }
 
         }
 
-
-
         /*
-
         for (; i < MEMORY[listNameHere] - 1; i++) {
 
             if (nextAddress == endAddress) break;
@@ -731,13 +759,37 @@ public class jkList {
             nextAddress = MEMORY[nextAddress + 1];
 
         }
-
          */
 
+        /*
+        //--------------------------------------------------------------------------check out
+        System.out.println("\nThe firstAddress__: " + firstAddress);
+        System.out.println("The firstValByFirstAddress: " + firstValByFirstAddress);
+        System.out.println("The firstNextLinkAddress: " + firstNextLinkAddress);
+        //-------------------------------------------------------------------------/check out
+        */
 
-        System.out.println("\nThe search: value of search value from list is: " + MEMORY[nextAddress]);
-        System.out.println("The search: link of search value from list is: " + nextAddress);
-        System.out.println("The search: id of search value from list is: " + i);
+        return firstAddress; // return 257 if the value not find here in the range (if memory cap = 256)
+
+    }
+
+    static void simpleSearchValueById(int listNameHere, int startID, int endID, int searchValue) {
+
+        //TODO: do not apply this method yet
+
+        // use there the list Id
+
+        int nextAddress = MEMORY[listNameHere];
+
+        int i = 0;
+
+
+        while (i < 127) {
+
+            nextAddress = MEMORY[nextAddress + 1];
+            i++;
+
+        }
 
 
     }
@@ -750,7 +802,7 @@ public class jkList {
 
 
         int halfOfTheRefArray; // start search position
-        int outListAddress = NULL_MEMORY_FILLER;
+        int outListAddress = OUT_OF_MEMORY_ADDRESS; // default value is over the MEMORY
 
 
         if ((REFERENCE_ARRAY_CAPACITY & 1) == 1) halfOfTheRefArray = (REFERENCE_ARRAY_CAPACITY / 2) + 1;
@@ -759,28 +811,66 @@ public class jkList {
 
         halfOfTheRefArray--; //we remember that the ref array starts at the 0 position
 
+        System.out.println("halfOfTheRefArray ID: " + halfOfTheRefArray);
 
-        if (referenceArray[halfOfTheRefArray] == MEMORY[referenceArray[halfOfTheRefArray]]) {
+        //-------------------------------------------------------------------------------the method core
 
-            outListAddress = referenceArray[halfOfTheRefArray];
+        System.out.println("MEMORY[referenceArray[halfOfTheRefArray]] is: "
+                + MEMORY[referenceArray[halfOfTheRefArray]]);
 
-        } else {
-
-            if (MEMORY[referenceArray[halfOfTheRefArray]] < searchValue) {
-
-                if (MEMORY[referenceArray[halfOfTheRefArray + 1]] < searchValue) {
-
-                    if (MEMORY[referenceArray[halfOfTheRefArray + 2]] < searchValue) {
+        System.out.println("MEMORY[referenceArray[halfOfTheRefArray] + 1] is: "
+                + MEMORY[referenceArray[halfOfTheRefArray] + 1]);
 
 
-                    }
+        int value0 = (MEMORY[referenceArray[halfOfTheRefArray - 1]]);
+        int value1 = (MEMORY[referenceArray[halfOfTheRefArray]]);
+        int value2 = (MEMORY[referenceArray[halfOfTheRefArray + 1]]);
+        int value3 = (MEMORY[referenceArray[halfOfTheRefArray + 2]]);
+
+        int param0 = (MEMORY[referenceArray[halfOfTheRefArray - 1] + 1]);
+        int param1 = (MEMORY[referenceArray[halfOfTheRefArray] + 1]);
+        int param2 = (MEMORY[referenceArray[halfOfTheRefArray + 1] + 1]);
+        int param3 = (MEMORY[referenceArray[halfOfTheRefArray + 2] + 1]);
+        int param4 = OUT_OF_MEMORY_ADDRESS - 1; // the tail
+
+
+        if (searchValue > value1) { // go to the ref arr center and start start branch 1 [1]
+
+            if (searchValue < value2) {
+
+                outListAddress = simpleSearchValueAddress(listNameHere, param1 , param2, searchValue); // [2]
+
+            } else { // [3]
+
+                if (searchValue < value3) { // [4]
+
+                    outListAddress = simpleSearchValueAddress(listNameHere, param2, param3, searchValue); // [4]
+
+                } else { // [5]
+
+                    outListAddress = simpleSearchValueAddress(listNameHere, param3, param4, searchValue); // [5]
 
                 }
+            }
 
+        } else { // start branch 2 [1']
+
+            if (searchValue > value0) { // [2']
+
+                outListAddress = simpleSearchValueAddress(listNameHere, param0, param1, searchValue); // [2']
+
+            } else { // [3']
+
+                // the value is out of range here
+                outListAddress = OUT_OF_MEMORY_ADDRESS + 10;
 
             }
 
+
         }
+
+        //------------------------------------------------------------------------------/the method core
+
 
         return outListAddress; // return -7 if the value not in the list
 
@@ -930,22 +1020,54 @@ public class jkList {
         System.out.println("TADAM, the reference address array of the sorted list is on the bottom:");
         jkPrintArray.jkPrintArrOneInt(referenceArray); // print the created ref array
 
-
-        // Demo: quasi-binary search method
-        longLine();
-        System.out.println("check the quasi-binary search method(we search the list address of the value \"12\"): ");
-
-        System.out.println(quasiBinSearchOfValue(0, 12));
-
-
         // Demo: check the simple search method
         longLine();
+
         System.out.println("check the brut force search method: ");
+
+        totalClearMemory();
+        newListArithmeticSequence(1, 2, 3, 15);
+        changeTheNodeIdVal(0, 3, 777);
+
         System.out.println("the test list: ");
 
         printList(0, 4);
-        simpleSearchValueAddress(0, 1, 200, 17);
-        printList(0,1);
+        System.out.println();
+        printList(0, 1);
+
+        sortListValues(0);
+
+        shortLine();
+
+        System.out.println("the sorted test list: ");
+
+        printList(0, 4);
+        System.out.println();
+        printList(0, 1);
+
+        toFillTheReferenceArray(0);
+        System.out.println("this is the ref array of the sorted list:");
+        jkPrintArray.jkPrintArrOneInt(referenceArray);
+
+        int out = simpleSearchValueAddress(0, referenceArray[1], referenceArray[2], 511);
+        System.out.println("\nthe find MEMORY address for val 511 is: " + out);
+        System.out.println();
+
+        // Demo: quasi-binary search method
+        longLine();
+        System.out.println("check the quasi-binary search method(we search the list address of the value \"1023\"): ");
+        System.out.println("there are the sorted test array: ");
+        printList(0, 4);
+        System.out.println();
+        printList(0, 1);
+
+        toFillTheReferenceArray(0);
+        System.out.println("this is the ref array of the sorted list:");
+        jkPrintArray.jkPrintArrOneInt(referenceArray);
+        System.out.println();
+
+        System.out.println("and remember that we are looking for the value 1023 at the list MEMORY: ");
+        System.out.println(quasiBinSearchOfValue(0, 1023));
 
 
     }
