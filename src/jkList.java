@@ -578,13 +578,13 @@ public class jkList {
         int firstIdToAAdding = MEMORY[listNameHere] / REFERENCE_ARRAY_CAPACITY - 1;
         int step = firstIdToAAdding + 1;
 
-        System.out.println("first ID to adding is " + (firstIdToAAdding));
+        //System.out.println("first ID to adding is " + (firstIdToAAdding));
 
         // TODO: to create the getMeTheLinkFromListByListId - method here
 
         int firstReferAddress = getTheNodeIdLink(listNameHere, firstIdToAAdding);
 
-        System.out.println("first ID link is " + firstReferAddress);
+        //System.out.println("first ID link is " + firstReferAddress);
 
 
         for (int referArrayIncrement = 0;
@@ -595,7 +595,7 @@ public class jkList {
 
             //referenceArray[referArrayIncrement] = firstIdToAAdding;
 
-            firstIdToAAdding += step;
+            firstIdToAAdding += step + 1;
 
         }
 
@@ -833,44 +833,65 @@ public class jkList {
         int param3 = (MEMORY[referenceArray[halfOfTheRefArray + 2] + 1]);
         int param4 = OUT_OF_MEMORY_ADDRESS - 1; // the tail
 
+        if (value0 == searchValue) {
 
-        if (searchValue > value1) { // go to the ref arr center and start start branch 1 [1]
+            outListAddress = param0;
 
-            if (searchValue < value2) {
+        } else if (value1 == searchValue) {
 
-                outListAddress = simpleSearchValueAddress(listNameHere, param1 , param2, searchValue); // [2]
+            outListAddress = param1;
 
-            } else { // [3]
+        } else if (value2 == searchValue) {
 
-                if (searchValue < value3) { // [4]
+            outListAddress = param2;
 
-                    outListAddress = simpleSearchValueAddress(listNameHere, param2, param3, searchValue); // [4]
+        } else if (value3 == searchValue) {
 
-                } else { // [5]
+            outListAddress = param3;
 
-                    outListAddress = simpleSearchValueAddress(listNameHere, param3, param4, searchValue); // [5]
+        } else  {
+
+
+            if (searchValue > value1) { // go to the ref arr center and start start branch 1 [1]
+
+                if (searchValue < value2) {
+
+                    outListAddress = simpleSearchValueAddress(listNameHere, param1, param2, searchValue); // [2]
+
+                } else { // [3]
+
+                    if (searchValue < value3) { // [4]
+
+                        outListAddress = simpleSearchValueAddress(listNameHere, param2, param3, searchValue); // [4]
+
+                    } else { // [5]
+
+                        outListAddress = simpleSearchValueAddress(listNameHere, param3, param4, searchValue); // [5]
+
+                    }
+                }
+
+            } else { // start branch 2 [1']
+
+                if (searchValue > value0) { // [2']
+
+                    outListAddress = simpleSearchValueAddress(listNameHere, param0, param1, searchValue); // [2']
+
+                } else { // [3']
+
+                    // the value is out of range here
+                    outListAddress = OUT_OF_MEMORY_ADDRESS + 10;
 
                 }
-            }
 
-        } else { // start branch 2 [1']
-
-            if (searchValue > value0) { // [2']
-
-                outListAddress = simpleSearchValueAddress(listNameHere, param0, param1, searchValue); // [2']
-
-            } else { // [3']
-
-                // the value is out of range here
-                outListAddress = OUT_OF_MEMORY_ADDRESS + 10;
 
             }
-
-
         }
 
         //------------------------------------------------------------------------------/the method core
 
+
+        System.out.println("result of the quasi method is: " + outListAddress);
 
         return outListAddress; // return -7 if the value not in the list
 
@@ -1067,7 +1088,7 @@ public class jkList {
         System.out.println();
 
         System.out.println("and remember that we are looking for the value 1023 at the list MEMORY: ");
-        System.out.println(quasiBinSearchOfValue(0, 1023));
+        System.out.println(quasiBinSearchOfValue(0, 777));
 
 
     }
