@@ -1,6 +1,6 @@
 public class jkList {
 
-    //--------------------------------------------------------------------------------------------constants block
+    //--------------------------------------------------------------------------------------------variables block
 
     private static final int MEMORY_SIZE = 256; // capacity of the MEMORY
 
@@ -26,12 +26,17 @@ public class jkList {
 
     private static int listName = OUT_OF_MEMORY_ADDRESS; // the name of the list
 
-    //-------------------------------------------------------------------------------------------/constants block
+    //-------------------------------------------------------------------------------------------/variables block
 
 
     //-----------------------------------------------------------mini random seed generator
 
     private static int miniRandomGen(int range) {
+
+        /*
+        the method takes as a basis the value in milliseconds from the current time and generates random values
+        in the range from 0 to the input parameter
+         */
 
 
         long v = System.currentTimeMillis(); // seed value
@@ -64,6 +69,10 @@ public class jkList {
 
     private static void createANewList() {
 
+        /*
+        method creates a new empty list in the MEMORY
+         */
+
         totalClearMemory();     //  memory preparation
 
         listName = FIRST_MEMORY_ADDRESS;
@@ -90,6 +99,11 @@ public class jkList {
 
     static int lastNodeNextAddressSearch() {  // search end node address
 
+        /*
+        the method searches in the MEMORY area in the list and finds the cell value for the next address
+        for adding to the list
+        */
+
         int lastNodeNextAddress = FIRST_MEMORY_ADDRESS + 2;
 
 
@@ -114,17 +128,18 @@ public class jkList {
     //-----------------------------------------------------------------------------------------/last node search method
 
     /*
-    3) добавление одного узла вручную
-    - в конец -- addNextValToTheList
-    - в начало
-    - после N-ого узла
-    - после последнего добавленного узла
+    3) adding one node manually
+      - addNextValToTheList
     */
 
     //-------------------------------------------------------------------------------------add a next Node To The List
 
     static void addNextValToTheList(int valueToAddToTheList) { // adding a node to the end of the list
 
+        /*
+        method adds a new node to the list with a new value. A stub value is set in the cell of the next node
+        address, which marks the end of the list
+        */
 
         //----------------------------------------------------------------------------------next node
 
@@ -167,26 +182,17 @@ public class jkList {
 
     //-------------------------------------------------------------------------------------------free address generator
 
+    /*
+    the method allocates an address from memory, checks that the address is not occupied by any value, and eventually
+    returns this address as a result of the method
+     */
+
     private static int getFreeMemoryAddress() {
 
         int k = 0; // the var of the generation result
         boolean isSecondCellFree = false; //  check for the second cell free space
 
-        /*
-        do {
 
-            k = miniRandomGen(MEMORY_SIZE); //  used generator here
-
-            if ((k & 1) == 1) k--; //  select only even numbers
-
-            if (MEMORY[k + 1] == NULL_MEMORY_FILLER) {
-
-                isSecondCellFree = true; //  check for the second cell free space
-
-            }
-
-        } while (MEMORY[k] == NULL_MEMORY_FILLER && isSecondCellFree && k != 0 && k != 1);
-       */
 
         while (true) {
 
@@ -210,6 +216,10 @@ public class jkList {
 
     //------------------------------------------------------------------------------------------clear all of the memory
 
+    /*
+    the method fills the entire area of the emulated memory with Null-values
+    */
+
     private static void totalClearMemory() {
 
         int memoryLen = MEMORY.length;
@@ -228,8 +238,9 @@ public class jkList {
 
 
     /*
-    1) удаление тела списка. Нужно вычистить всю память от узлов, имя списка должно указывать на адрес,
-    которого нет в памяти.
+    1) deleting the body of the list. It is necessary to clear all memory from the nodes,
+    the name of the list should point to the address,
+    which is not in memory.
      */
 
     static void clearListBody() {
@@ -272,17 +283,17 @@ public class jkList {
     }
 
     /*
-    2) Вывод списка должен быть в виде:
+    2) The list output:
 
-    - Полный вывод. Выводится содержимое всей памяти.(,1)
+     - Full print. The contents of all memory are displayed. (, 1)
 
-    - Вывод списка значений и количество всех узлов. Выводится только список в виде(,2)
-    6 nodes: 3 -> 32 ->  55 ->  7 ->  21 ->  88 -> null
+     - Displaying a list of values and the number of all nodes. Only the list is displayed as (, 2)
+     6 nodes: 3 -> 32 -> 55 -> 7 -> 21 -> 88 -> null
 
-    - Вывод списка значений, и номеров узлов. Выводятся узлы в виде(,3)
-    [1] 3 -> [2] 32 ->  [3] 55 ->  [4] 7 ->  [5] 21 ->  [6] 88 -> null
+     - Displaying a list of values and node numbers. The nodes are displayed in the form (, 3)
+     [1] 3 -> [2] 32 -> [3] 55 -> [4] 7 -> [5] 21 -> [6] 88 -> null
 
-    - Вывод всей основной информации (, 4)
+     - Display of all basic information (, 4)
      */
 
     static void printList(int printListName, int option) {
@@ -410,6 +421,10 @@ public class jkList {
 
     static int getTheNodeIdVal(int listName, int nodeId) {
 
+        /*
+        the method allows you to get the value of the list node from its ordinal number
+        */
+
         int nextAddress = MEMORY[listName + 1];
         int i = 0;
 
@@ -488,13 +503,14 @@ public class jkList {
     //---------------------------------------------------------------------------------------------------filler methods
 
     /*
-    11) Создание списка максимальной длины, заполненным значениями (the length may be )
 
-    - константной последовательности -- newListConstSequence
+    11) Create a list of the maximum length filled with values (the length may be any)
 
-    - арифметической прогрессии -- newListArithmeticSequence
+     - constant sequence - newListConstSequence
 
-    - периодической последовательности -- newListPeriodicSequence
+     - arithmetic progression - newListArithmeticSequence
+
+     - periodic sequence - newListPeriodicSequence
 
      */
 
@@ -565,15 +581,18 @@ public class jkList {
     //--------------------------------------------------------------------------------------------------/filler methods
 
 
-
     /*
-    1) Написать метод, который помещает во вспомогательный массив адреса узлов, расположенных через каждые N / 4 узлов,
-    где N – общее число узлов списка. Например, если в списке 100 узлов, тогда во вспомогательном массиве будут
-    храниться адреса 25, 50, 75 и 100 узлов. Если в списке 77 узлов, тогда во вспомогательном массиве будут храниться
-    адреса 19, 38, 57 и 76 узлов.
+    1) method, puts at the reference array of addresses, each every N / 4 nodes,
+      where N is the total number of nodes in the list.
     */
 
+
     static void toFillTheReferenceArray(int listNameHere) {
+
+        /*
+        the method fills the reference array with the values of the addresses of the
+        sorted list, based on its capacity
+        */
 
         int firstIdToAAdding = MEMORY[listNameHere] / REFERENCE_ARRAY_CAPACITY - 1;
         int step = firstIdToAAdding + 1;
@@ -604,6 +623,8 @@ public class jkList {
     //----------------------------------------------------------------------------------------------swap the list nodes
 
     /*
+    the method allows you to exchange between two list nodes.
+
     the method exchanges the values of the specified nodes of the specified list by node id
     */
 
@@ -630,6 +651,8 @@ public class jkList {
     static void sortListValues(int listNameHere) {
 
     /*
+    the method takes an incoming list and sorts it in ascending order.
+
     There is the easy bubble sort method for the some list.
     The first loop shrinks the array fragment each pass, because the second loop always
     puts at the end fragment maximum element (the little optimization here)
@@ -687,7 +710,7 @@ public class jkList {
 
         }
 
-        System.out.println("the nextAddress to value set is: " + nextAddress);
+        //System.out.println("the nextAddress to value set is: " + nextAddress);
 
         MEMORY[nextAddress] = newNodeValue;
 
@@ -701,25 +724,34 @@ public class jkList {
 
     static int simpleSearchValueAddress(int listNameHere, int startAddress, int endAddress, int searchValue) {
 
+        /*
+        the method allows by simply iterating over the elements of nodes in the list to find
+        the address of the value to search.
+
+        the implementation of the method allows you to accept as input arguments the initial and final values of
+        the range of addresses for search
+        */
+
+
         System.out.printf("\n::input start = %d, input end = %d, value to search = %d, list name = %d::\n",
                 startAddress, endAddress, searchValue, listNameHere);
 
-        //TODO: do not apply this method yet
+        //TODO: 23-12-2020
 
         int firstAddress = startAddress;
 
         int firstValByFirstAddress = MEMORY[firstAddress];
 
-        int firstNextLinkAddress = startAddress + 1; // значение для перехода к след узлу
+        int firstNextLinkAddress = startAddress + 1; // value to go to the next node
 
 
         while (MEMORY[firstAddress] != OUT_OF_MEMORY_ADDRESS) {
 
-            System.out.println("firstAddress (simple method): " + firstAddress);
+            //System.out.println("firstAddress (simple method): " + firstAddress);
 
             firstAddress = MEMORY[firstAddress + 1];
 
-            if (searchValue == MEMORY[firstAddress]) { // если значение найдено, то выход
+            if (searchValue == MEMORY[firstAddress]) { // if the value is found then break
 
                 firstValByFirstAddress = MEMORY[firstAddress];
 
@@ -800,6 +832,13 @@ public class jkList {
 
     static int quasiBinSearchOfValue(int listNameHere, int searchValue) {
 
+        /*
+        the final method allows you to search for the address of the value to search in the list
+        using the capabilities of the support array
+        */
+
+        // TODO: it is possible to implement for other values of the reference array capacity in future
+
 
         int halfOfTheRefArray; // start search position
         int outListAddress = OUT_OF_MEMORY_ADDRESS; // default value is over the MEMORY
@@ -811,21 +850,26 @@ public class jkList {
 
         halfOfTheRefArray--; //we remember that the ref array starts at the 0 position
 
-        System.out.println("halfOfTheRefArray ID: " + halfOfTheRefArray);
+        //System.out.println("halfOfTheRefArray ID: " + halfOfTheRefArray);
 
         //-------------------------------------------------------------------------------the method core
 
+        /*
         System.out.println("MEMORY[referenceArray[halfOfTheRefArray]] is: "
                 + MEMORY[referenceArray[halfOfTheRefArray]]);
 
         System.out.println("MEMORY[referenceArray[halfOfTheRefArray] + 1] is: "
                 + MEMORY[referenceArray[halfOfTheRefArray] + 1]);
+        */
 
+        // the block for comparing values
 
         int value0 = (MEMORY[referenceArray[halfOfTheRefArray - 1]]);
         int value1 = (MEMORY[referenceArray[halfOfTheRefArray]]);
         int value2 = (MEMORY[referenceArray[halfOfTheRefArray + 1]]);
         int value3 = (MEMORY[referenceArray[halfOfTheRefArray + 2]]);
+
+        // the block of parameters to transfer to the simple search method
 
         int param0 = (MEMORY[referenceArray[halfOfTheRefArray - 1] + 1]);
         int param1 = (MEMORY[referenceArray[halfOfTheRefArray] + 1]);
@@ -849,7 +893,7 @@ public class jkList {
 
             outListAddress = param3;
 
-        } else  {
+        } else {
 
 
             if (searchValue > value1) { // go to the ref arr center and start start branch 1 [1]
@@ -880,7 +924,7 @@ public class jkList {
                 } else { // [3']
 
                     // the value is out of range here
-                    outListAddress = OUT_OF_MEMORY_ADDRESS + 10;
+                    outListAddress = OUT_OF_MEMORY_ADDRESS;
 
                 }
 
@@ -891,9 +935,9 @@ public class jkList {
         //------------------------------------------------------------------------------/the method core
 
 
-        System.out.println("result of the quasi method is: " + outListAddress);
+        //System.out.println("result of the quasi method is: " + outListAddress);
 
-        return outListAddress; // return -7 if the value not in the list
+        return outListAddress; // return 257 if the value not in the list
 
     }
 
@@ -904,13 +948,17 @@ public class jkList {
 
     public static void main(String[] args) {
 
+        // Demo: the first method clears all MEMORY nods
         totalClearMemory();
 
-        System.out.println("The MEMORY array:");
+        System.out.println("The first method clears all MEMORY nods\nThe MEMORY array:");
         System.out.print("--: ");
         jkPrintArray.jkPrintArrOneInt(MEMORY);
 
-        System.out.print("The free gen address (== -7) --: ");
+        // Demo: here is the work of the generator of free memory addresses
+        longLine();
+
+        System.out.print("Some free gen address (== -7) --: ");
         System.out.println(getFreeMemoryAddress());
 
         /*
@@ -927,17 +975,27 @@ public class jkList {
         jkPrintArray.jkPrintArrOneInt(testArray);
         */
 
+        // Demo: the method of create new list here
+        longLine();
         System.out.println();
+
         createANewList();
 
         System.out.println("The MEMORY array with the head node:");
         System.out.print("--: ");
         jkPrintArray.jkPrintArrOneInt(MEMORY);
 
+        // Demo: here we will get in which memory cell we can take the address to add a new node
+        longLine();
+
         System.out.println();
         System.out.println("The last Node Next Address Search:");
         System.out.print("--: ");
-        System.out.println("1_ " + lastNodeNextAddressSearch());
+        System.out.println("Next Address_ " + lastNodeNextAddressSearch());
+
+        // Demo: there are the method for adding any node to the list
+        longLine();
+        System.out.println("there are the method for adding any node to the list:");
 
         System.out.println();
         System.out.println("There are adding a first value to the list:");
@@ -969,47 +1027,94 @@ public class jkList {
         System.out.println("There are adding a new value to the list:");
         addNextValToTheList(7005);
         jkPrintArray.jkPrintArrOneInt(MEMORY);
+
+        // Demo: here we see the implementation of the method for printing the list in various views
+        longLine();
+        System.out.println("here we see the implementation of the method for printing the list in various views");
+
+        System.out.println("MEMORY view option:");
+        printList(0, 1);
+        shortLine();
+
+        System.out.println("linked view option:");
         printList(0, 2);
         shortLine();
+
+        System.out.println("linked view option with the list ID:");
         printList(0, 3);
+        shortLine();
+
+        System.out.println("full info view option:");
+        printList(0, 4);
         System.out.println();
-        System.out.println(getTheNodeIdVal(0, 6));
+
+        //Demo: method for getting the value of a node by its order in the list
+        longLine();
+
+        System.out.println("method for getting the value of a node by its order in the list(node ID is 3)");
+        System.out.println(getTheNodeIdVal(0, 3));
+
+        //Demo: method for setting a new value of a node in its order in the list
+        longLine();
+
+        System.out.println("method for setting a new value (888) of a node in its order in the list(node ID is 3)");
+
         changeTheNodeIdVal(0, 3, 888);
+
+        System.out.println("the changed list:");
+
         printList(0, 3);
 
 
-        System.out.println();
+        // Demo: The clear list method right here
+        System.out.println("\nThe clear list method right here:");
         longLine();
 
         clearListBody();
         printList(0, 1);
 
-
+        // Demo: constant list method with given parameters
         longLine();
+
+        System.out.println("constant list method with given parameters:");
         System.out.println("check the newListConstSequence:");
+
         newListConstSequence(13, 127);
         jkPrintArray.jkPrintArrOneInt(MEMORY);
         printList(0, 3);
+
+
+        //Demo: second method for setting a new value of a node in its order in the list
+        longLine();
+        System.out.println("second method for setting a new value of a node in its order in the list:");
+
         System.out.println();
         System.out.println(getTheNodeIdVal(0, 7));
 
         changeTheNodeIdVal(0, 7, 5555);
         printList(0, 3);
 
-
+        //Demo: of longLine and shortLine methods
+        System.out.println("\n\n");
+        System.out.println("longLine and shortLine methods:");
         longLine();
         shortLine();
 
-        // Demo: Periodic sequence
+
+        //-------------------------------------------------------------- next stage
+
+
+        // Demo: Periodic sequence with given parameters
         longLine();
-        System.out.println("check the newListPeriodicSequence:");
+        System.out.println("Periodic sequence with given parameters:");
         newListPeriodicSequence(1, 8, 127);
-        printList(0, 3);
+        printList(0, 2);
 
-
+        // Demo: Arithmetic sequence with given parameters
+        longLine();
         System.out.println("check the newListArithmeticSequence:");
         newListArithmeticSequence(7, 1, 2, 127); // 127 elements
-        printList(0, 4);
+        printList(0, 2);
 
         shortLine();
         System.out.println("check the setNodeValuesById - method:");
@@ -1017,15 +1122,19 @@ public class jkList {
         //setNodeAddressById(0, 3, 111); it is not possible
         printList(0, 4);
 
+
+        // Demo: node swap method
         shortLine();
         System.out.println("to node values swap use the swapListNodes - method(id 6 swap id 7): ");
         swapListNodes(0, 6, 7);
         printList(0, 4);
 
+
         // Demo: sort the list method
         shortLine();
         System.out.println("sort the list method: ");
         sortListValues(0);
+
         System.out.println("there is the sorted list:");
         printList(0, 4);
 
@@ -1088,7 +1197,12 @@ public class jkList {
         System.out.println();
 
         System.out.println("and remember that we are looking for the value 1023 at the list MEMORY: ");
-        System.out.println(quasiBinSearchOfValue(0, 777));
+        System.out.println("and finally the address that we were looking for is : ");
+        System.out.println(quasiBinSearchOfValue(0, 1023));
+
+        //
+        longLine();
+        System.out.println("The end of the demonstration, thank you all!");
 
 
     }
